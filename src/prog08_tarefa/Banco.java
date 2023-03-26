@@ -5,69 +5,37 @@ import java.util.HashSet;
 
 
 public class Banco {
-    
-    // private CuentaBancaria[] cuentas;
-    //private final int MAX_CUENTAS = 100;
-   // private int cantidadCuentas;
-    HashSet<CuentaBancaria> cuentas = new HashSet<>();
-
-    public Banco() {
-    }
-
    
-     
-            
+    HashSet<CuentaBancaria> cuentas = new HashSet<>();
     
-    //public Banco(){
-        //this.cuentas = new CuentaBancaria[this.MAX_CUENTAS];
-        //this.cantidadCuentas = 0; 
-        
-    //}
-
-     private CuentaBancaria buscarCuenta(String IBAN) {
-         for (CuentaBancaria cuenta: cuentas){
-             if (cuenta.getIBAN().compareTo(IBAN)){
+    private CuentaBancaria buscarCuenta(String IBAN) {
+         //CuentaBancaria cuenta =null;
+         for (CuentaBancaria cuenta: this.cuentas){
+             if (cuenta.getIBAN().equalsIgnoreCase(IBAN)){
                  return cuenta;
              }
          }
-                  
-//        for (int i = 0; i < this.cantidadCuentas; i++) {
-//            if (this.cuentas[i].getIBAN().equals(IBAN)) {
-//                return this.cuentas[i];  
-//            }
-//        }
-        return null;
-    }
-    
-    
+          return null;        
+        }
+
+        
+        
     public boolean abrirCuenta(CuentaBancaria cb) {
 
-//        if (this.cantidadCuentas == this.MAX_CUENTAS) {
-//            System.out.println("No caben más cuentas"); // si hay 100 o más
-//            return false;
-//        
-//        }
-//        
-//        CuentaBancaria nuevoIBAN = this.buscarCuenta(cb.getIBAN());
-//        if (nuevoIBAN!=null){
-//            System.out.println("Ya existe");
-//            return false;
-//            
-//        }
-//         this.cuentas[this.cantidadCuentas] = cb;
-//        this.cantidadCuentas++;
+      
+        this.cuentas.add(cb);
+        System.out.println("Cuenta creada");
         return true;
     }  
    
 
-//public String[] ListadoCuentas() {
-//    String[]infoCuentas = new String[this.cantidadCuentas];
-//    for (int i = 0; i < this.cantidadCuentas; i++) {
-//        infoCuentas[i] = this.cuentas[i].devolverInfoString();
-//    }
-//    return infoCuentas;
-//    
-//    }
+public void ListadoCuentas() {
+    
+    for (CuentaBancaria cb: this.cuentas){
+        System.out.println(cb.devolverInfoString());
+    }
+}
+
 public String informacionCuenta(String IBAN){
     CuentaBancaria cb = this.buscarCuenta(IBAN);
     if (cb != null) {
@@ -112,9 +80,9 @@ public boolean ingresoCuenta(String IBAN, double cantidad) {
     }
 
     public double obtenerSaldo(String IBAN) {
-        CuentaBancaria c = this.buscarCuenta(IBAN);
-        if (c != null) {
-            return c.getSaldo();
+        CuentaBancaria cuenta = this.buscarCuenta(IBAN);
+        if (cuenta != null) {
+            return cuenta.getSaldo();
         }
         return -1;
     }
