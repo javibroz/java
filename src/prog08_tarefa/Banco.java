@@ -26,7 +26,7 @@ public class Banco {
 
      private CuentaBancaria buscarCuenta(String IBAN) {
          for (CuentaBancaria cuenta: cuentas){
-             if (cuenta.getIBAN().equals(cuenta)){
+             if (cuenta.getIBAN().compareTo(IBAN)){
                  return cuenta;
              }
          }
