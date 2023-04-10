@@ -1,7 +1,7 @@
 
 package prog08_tarefa;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,31 +11,29 @@ import java.util.Scanner;
 public class Principal {
 
     
-    @SuppressWarnings("empty-statement")
+    
     public static void main(String[] args) {
         
-                 
-        String nombreTitular, apellidosTitular, DNITitular;
-        String IBAN= "";
+               String nombreTitular, apellidosTitular, DNITitular;
+        String IBAN = "";
         String listaAutorizadas, infoCuenta;
-        //String[] listaCuentas;
-        HashSet<CuentaBancaria> cuenta = new HashSet<>();
-        Persona titular=null;
-        double saldo= 0; 
+        String[] listaCuentas;
+       // ArrayList<CuentaBancaria> cuenta = new ArrayList<>();
+        Persona titular = null;
+        double saldo = 0;
         double tipoInteres, comisionMantenimiento, tipoInteresDescubierto, maxDescubierto, comisionDescubierto, cantidad;
         boolean salir = false;
         Banco banco = new Banco();
-        //CuentaBancaria cuenta = null;
+        CuentaBancaria cuenta = null;
         int tipoCuenta;
-        
-       
-        
+
         Scanner sc = new Scanner(System.in);
         //int opcion = 0;
         
         do {
             
         try {
+            System.out.println("*******************************************");
             System.out.println("  OPCIONES:");
             System.out.println("1. Abrir una nueva cuenta");
             System.out.println("2. Ver un listado de las cuentas disponibles");
@@ -43,7 +41,8 @@ public class Principal {
             System.out.println("4. Realizar un ingreso en una cuenta");
             System.out.println("5. Retirar efectivo de una cuenta");
             System.out.println("6. Consultar el saldo actual de una cuenta");
-            System.out.println("7. Salir de la aplicacion");
+            System.out.println("7. Eliminar cuenta");
+            System.out.println("8. Salir de la aplicacion");
             System.out.println(" ");
             System.out.print("Introduce una opcion: ");
             
@@ -81,19 +80,19 @@ public class Principal {
                         case 1:
                                 System.out.println("Tipo de interés: ");
                                 tipoInteres = sc.nextDouble();
-                                //cuenta= new CuentaAhorro(tipoInteres, titular,saldo,IBAN);
+                                cuenta= new CuentaAhorro(tipoInteres, titular,saldo,IBAN);
                                
                                 break;                   
                                                              
                         case 2:
-                        System.out.println("Lista de entidades autorizadas");
+                        System.out.println("Lista de entidades autorizadas:");
                                 listaAutorizadas = sc.next();
-                                System.out.println(" Comision de mantenimiento");
+                                System.out.println(" Comision de mantenimiento:");
                                 comisionMantenimiento = sc.nextDouble();
-                                //cuenta = new CuentaCorrientePersonal(comisionMantenimiento, listaAutorizadas, titular, saldo, IBAN);
+                                cuenta = new CuentaCorrientePersonal(comisionMantenimiento, listaAutorizadas, titular, saldo, IBAN);
                                 break;
                         case 3:
-                                System.out.println("Lista de entidades autorizadas");
+                                System.out.println("Lista de entidades autorizadas:");
                                 listaAutorizadas = sc.next();
                                 System.out.println(" Tipo de interes por descubierto:");
                                 tipoInteresDescubierto = sc.nextDouble();
@@ -101,25 +100,22 @@ public class Principal {
                                 maxDescubierto = sc.nextDouble();
                                 System.out.println("Comisión  por descubierto");
                                 comisionDescubierto = sc.nextDouble();
-                                //cuenta = new CuentaCorrienteEmpresa(maxDescubierto, tipoInteresDescubierto, comisionDescubierto, listaAutorizadas, titular, saldo, IBAN);
+                                cuenta = new CuentaCorrienteEmpresa(maxDescubierto, tipoInteresDescubierto, comisionDescubierto, listaAutorizadas, titular, saldo, IBAN);
                                 break;
                          default:
                                 throw new Exception(" Elige un tipo de cuenta");
                         }
 
-//                        if (banco.abrirCuenta(cuenta)) {
-//                            System.out.println("Cuenta creada.");
-//                           
-//                        } else {
-//                            System.out.println("No se ha creado la cuenta.");
-//                        }
+                        if (banco.abrirCuenta(cuenta)) {
+                            System.out.println("Cuenta creada.");
+                           
+                        } else {
+                            System.out.println("No se ha creado la cuenta.");
+                        }
 
                         break;
                     case 2:
-//                        listaCuentas = banco.ListadoCuentas();
-//                        for (int i = 0; i < listaCuentas.length; i++) {
-//                            System.out.println(listaCuentas[i]);
-//                        }
+//                        
                         break;
                     case 3:
                         System.out.println("Introduce el IBAN");
@@ -170,7 +166,19 @@ public class Principal {
                             System.out.println("La cuenta no existe");
                         }
                         break;
-                    case 7:
+                        case 7:
+                        System.out.println("Introduce el IBAN de la cuenta a eliminar:");
+                        IBAN = sc.next();
+
+                        if (banco.eliminarCuenta(IBAN)){
+                            System.out.println("Se elimino");
+                        }else{
+                            System.out.println("No se elimino");
+                        }
+                        
+                        
+                        break;
+                        case 8:
                         salir = true;
                         break;
                    
@@ -183,7 +191,7 @@ public class Principal {
             }
             }
         
-         while (salir = false); 
+         while (salir == false); 
         
         }
          

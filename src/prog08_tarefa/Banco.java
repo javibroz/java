@@ -1,15 +1,18 @@
 
 package prog08_tarefa;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 
 public class Banco {
    
-    HashSet<CuentaBancaria> cuentas = new HashSet<>();
+    private ArrayList<CuentaBancaria> cuentas;
     
-    private CuentaBancaria buscarCuenta(String IBAN) {
-         //CuentaBancaria cuenta =null;
+// buscaCuenta: Recibe un IBAN y busca la cuenta correspondiente.    
+    
+    
+    public CuentaBancaria buscaCuenta(String IBAN) {
+         
          for (CuentaBancaria cuenta: this.cuentas){
              if (cuenta.getIBAN().equalsIgnoreCase(IBAN)){
                  return cuenta;
@@ -18,75 +21,111 @@ public class Banco {
           return null;        
         }
 
+    //abrirCuenta: recibe por parámetro un objeto CuentaBancaria
+    //y lo almacena en la estructura. 
+    //Devuelve true o false indicando si la operación se realizó con éxito.  
         
-        
-    public boolean abrirCuenta(CuentaBancaria cb) {
-
-      
-        this.cuentas.add(cb);
+    public boolean abrirCuenta(CuentaBancaria cuenta) {
+        System.out.println("Metodo abrir la cuenta");
+         CuentaBancaria encontrada= this.buscaCuenta(cuenta.getIBAN());
+         if (encontrada!= null){
+             System.out.println("Ya existe.");
+             return false;
+         }
+        this.cuentas.add(cuenta);
         System.out.println("Cuenta creada");
         return true;
     }  
    
-
-public void ListadoCuentas() {
+//listadoCuentas: no recibe parámetro y devuelve un array 
+//donde cada elemento es una cadena que representa la información de una cuenta.
+public String[] ListadoCuentas() {
     
-    for (CuentaBancaria cb: this.cuentas){
-        System.out.println(cb.devolverInfoString());
-    }
+    String[] infoCuenta = new String[this.cuentas.size()];
+        for (int i = 0; i < infoCuenta.length; i++) {
+            infoCuenta[i] = this.cuentas.get(i).devolverInfoString();
+        }
+        return infoCuenta;
 }
-
+//informacionCuenta: recibe un iban por parámetro y 
+//devuelve una cadena con la información de la cuenta o null si la cuenta no existe.
 public String informacionCuenta(String IBAN){
-    CuentaBancaria cb = this.buscarCuenta(IBAN);
-    if (cb != null) {
-       return cb.devolverInfoString();
+    CuentaBancaria cuenta = this.buscaCuenta(IBAN);
+    if (cuenta != null) {
+       return cuenta.devolverInfoString();
     }
        return null;     
 }
+
+//ingresoCuenta: recibe un iban por parámetro y una cantidad
+//e ingresa la cantidad en la cuenta. Devuelve true o false indicando
+//si la operación se realizó con éxito.
 public boolean ingresoCuenta(String IBAN, double cantidad) {
 
-        CuentaBancaria c = this.buscarCuenta(IBAN);
+        CuentaBancaria c = this.buscaCuenta(IBAN);
         if (c != null) {
             c.setSaldo(c.getSaldo() + cantidad);
             return true;
         }
         return false;
     }
-
+ //retiradaCuenta: recibe un iban por parámetro y una cantidad y trata de 
+//retirar la cantidad de la cuenta. Devuelve true o false indicando
+//si la operación se realizó con éxito.
     public boolean retiradaCuenta(String IBAN, double cantidad) {
 
-        CuentaBancaria c = this.buscarCuenta(IBAN);
-        if (c != null) {
+        CuentaBancaria cuenta = this.buscaCuenta(IBAN);
+        if (cuenta != null) {
 
-            boolean sePuedeRetirar = false;
+            boolean puedeHacerse = false;
 
-            if (c.getSaldo() - cantidad > 0) {
-                sePuedeRetirar = true;
-            }else if(c instanceof CuentaCorrienteEmpresa){
-                CuentaCorrienteEmpresa aux = (CuentaCorrienteEmpresa)c;
-                if(Math.abs(c.getSaldo() - cantidad) < aux.getMaximoDescubierto()){
-                    sePuedeRetirar = true;
+            if (cuenta.getSaldo() - cantidad > 0) {
+                puedeHacerse = true;
+            }else if(cuenta instanceof CuentaCorrienteEmpresa){
+                CuentaCorrienteEmpresa aux = (CuentaCorrienteEmpresa)cuenta;
+                if(Math.abs(cuenta.getSaldo() - cantidad) < aux.getMaximoDescubierto()){
+                    puedeHacerse = true;
                 }
             }
 
-            if(sePuedeRetirar){
-                c.setSaldo(c.getSaldo() - cantidad);
+            if(puedeHacerse){
+                cuenta.setSaldo(cuenta.getSaldo() - cantidad);
             }
 
-            return sePuedeRetirar;
+            return puedeHacerse;
 
         }
         return false;
     }
-
+//obtenerSaldo: Recibe un iban por parámetro y devuelve el saldo
+//de la cuenta si existe. En caso contrario devuelve -1.
     public double obtenerSaldo(String IBAN) {
-        CuentaBancaria cuenta = this.buscarCuenta(IBAN);
+        CuentaBancaria cuenta = this.buscaCuenta(IBAN);
         if (cuenta != null) {
             return cuenta.getSaldo();
         }
         return -1;
     }
+//"Eliminar Cuenta Bancaria". A través de esta opción se pedirá el IBAN
+//de una cuenta bancaria y se eliminará de la estructura siempre que existe y su saldo sea 0.
+    //No se podrán eliminar cuentas con saldo superior a 0.
+    
+   
 
+    public boolean eliminarCuenta(String IBAN){
+        CuentaBancaria cuenta = this.buscaCuenta(IBAN);
+        if (cuenta!= null){
+            for (CuentaBancaria cuentaElim: this.cuentas){
+                if (cuentaElim.getIBAN().equalsIgnoreCase(IBAN) && cuentaElim.getSaldo()==0){
+                    this.cuentas.remove(cuenta);
+                    return true;
+                }
+                
+            }
+        }
+        return false;
+        
+    }
     
     }
 
