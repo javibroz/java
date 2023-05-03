@@ -78,10 +78,10 @@ public class Principal {
                         switch (tipoCuenta) {
                         
                         case 1:
-                                System.out.println("Tipo de interÃ©s: ");
+                                System.out.println("Tipo de interés: ");
                                 tipoInteres = sc.nextDouble();
                                 cuenta= new CuentaAhorro(tipoInteres, titular,saldo,IBAN);
-                               
+                               System.out.println(" Se creó la cuenta: "+ cuenta.devolverInfoString());
                                 break;                   
                                                              
                         case 2:
@@ -96,9 +96,9 @@ public class Principal {
                                 listaAutorizadas = sc.next();
                                 System.out.println(" Tipo de interes por descubierto:");
                                 tipoInteresDescubierto = sc.nextDouble();
-                                System.out.println("MÃ¡ximo descubierto permitido: ");
+                                System.out.println("Máximo descubierto permitido: ");
                                 maxDescubierto = sc.nextDouble();
-                                System.out.println("ComisiÃ³n  por descubierto");
+                                System.out.println("Comisión  por descubierto");
                                 comisionDescubierto = sc.nextDouble();
                                 cuenta = new CuentaCorrienteEmpresa(maxDescubierto, tipoInteresDescubierto, comisionDescubierto, listaAutorizadas, titular, saldo, IBAN);
                                 break;

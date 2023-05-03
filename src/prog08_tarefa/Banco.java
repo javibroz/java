@@ -7,6 +7,9 @@ import java.util.ArrayList;
 public class Banco {
    
     private ArrayList<CuentaBancaria> cuentas;
+     public Banco() {
+        this.cuentas = new ArrayList<>();
+    }
     
 // buscaCuenta: Recibe un IBAN y busca la cuenta correspondiente.    
     
@@ -21,24 +24,24 @@ public class Banco {
           return null;        
         }
 
-    //abrirCuenta: recibe por par√°metro un objeto CuentaBancaria
+    //abrirCuenta: recibe por par·metro un objeto CuentaBancaria
     //y lo almacena en la estructura. 
-    //Devuelve true o false indicando si la operaci√≥n se realiz√≥ con √©xito.  
+    //Devuelve true o false indicando si la operaciÛn se realizÛ con Èxito.  
         
     public boolean abrirCuenta(CuentaBancaria cuenta) {
-        System.out.println("Metodo abrir la cuenta");
-         CuentaBancaria encontrada= this.buscaCuenta(cuenta.getIBAN());
+        
+         CuentaBancaria encontrada = this.buscaCuenta(cuenta.getIBAN());
          if (encontrada!= null){
              System.out.println("Ya existe.");
              return false;
          }
         this.cuentas.add(cuenta);
-        System.out.println("Cuenta creada");
+        //System.out.println("Cuenta creada");
         return true;
     }  
    
-//listadoCuentas: no recibe par√°metro y devuelve un array 
-//donde cada elemento es una cadena que representa la informaci√≥n de una cuenta.
+//listadoCuentas: no recibe par·metro y devuelve un array 
+//donde cada elemento es una cadena que representa la informaciÛn de una cuenta.
 public String[] ListadoCuentas() {
     
     String[] infoCuenta = new String[this.cuentas.size()];
@@ -47,8 +50,8 @@ public String[] ListadoCuentas() {
         }
         return infoCuenta;
 }
-//informacionCuenta: recibe un iban por par√°metro y 
-//devuelve una cadena con la informaci√≥n de la cuenta o null si la cuenta no existe.
+//informacionCuenta: recibe un iban por par·metro y 
+//devuelve una cadena con la informaciÛn de la cuenta o null si la cuenta no existe.
 public String informacionCuenta(String IBAN){
     CuentaBancaria cuenta = this.buscaCuenta(IBAN);
     if (cuenta != null) {
@@ -57,9 +60,9 @@ public String informacionCuenta(String IBAN){
        return null;     
 }
 
-//ingresoCuenta: recibe un iban por par√°metro y una cantidad
+//ingresoCuenta: recibe un iban por par·metro y una cantidad
 //e ingresa la cantidad en la cuenta. Devuelve true o false indicando
-//si la operaci√≥n se realiz√≥ con √©xito.
+//si la operaciÛn se realizÛ con Èxito.
 public boolean ingresoCuenta(String IBAN, double cantidad) {
 
         CuentaBancaria c = this.buscaCuenta(IBAN);
@@ -69,9 +72,9 @@ public boolean ingresoCuenta(String IBAN, double cantidad) {
         }
         return false;
     }
- //retiradaCuenta: recibe un iban por par√°metro y una cantidad y trata de 
+ //retiradaCuenta: recibe un iban por par·metro y una cantidad y trata de 
 //retirar la cantidad de la cuenta. Devuelve true o false indicando
-//si la operaci√≥n se realiz√≥ con √©xito.
+//si la operaciÛn se realizÛ con Èxito.
     public boolean retiradaCuenta(String IBAN, double cantidad) {
 
         CuentaBancaria cuenta = this.buscaCuenta(IBAN);
@@ -79,7 +82,7 @@ public boolean ingresoCuenta(String IBAN, double cantidad) {
 
             boolean puedeHacerse = false;
 
-            if (cuenta.getSaldo() - cantidad > 0) {
+            if (cuenta.getSaldo() - cantidad >= 0) {
                 puedeHacerse = true;
             }else if(cuenta instanceof CuentaCorrienteEmpresa){
                 CuentaCorrienteEmpresa aux = (CuentaCorrienteEmpresa)cuenta;
@@ -97,7 +100,7 @@ public boolean ingresoCuenta(String IBAN, double cantidad) {
         }
         return false;
     }
-//obtenerSaldo: Recibe un iban por par√°metro y devuelve el saldo
+//obtenerSaldo: Recibe un iban por par·metro y devuelve el saldo
 //de la cuenta si existe. En caso contrario devuelve -1.
     public double obtenerSaldo(String IBAN) {
         CuentaBancaria cuenta = this.buscaCuenta(IBAN);
@@ -106,9 +109,9 @@ public boolean ingresoCuenta(String IBAN, double cantidad) {
         }
         return -1;
     }
-//"Eliminar Cuenta Bancaria". A trav√©s de esta opci√≥n se pedir√° el IBAN
-//de una cuenta bancaria y se eliminar√° de la estructura siempre que existe y su saldo sea 0.
-    //No se podr√°n eliminar cuentas con saldo superior a 0.
+//"Eliminar Cuenta Bancaria". A travÈs de esta opciÛn se pedir· el IBAN
+//de una cuenta bancaria y se eliminar· de la estructura siempre que existe y su saldo sea 0.
+    //No se podr·n eliminar cuentas con saldo superior a 0.
     
    
 
