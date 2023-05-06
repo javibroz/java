@@ -42,7 +42,7 @@ public class Banco {
    
 //listadoCuentas: no recibe parámetro y devuelve un array 
 //donde cada elemento es una cadena que representa la información de una cuenta.
-public String[] ListadoCuentas() {
+public String[] listadoCuentas() {
     
     String[] infoCuenta = new String[this.cuentas.size()];
         for (int i = 0; i < infoCuenta.length; i++) {
@@ -120,7 +120,7 @@ public boolean ingresoCuenta(String IBAN, double cantidad) {
         if (cuenta!= null){
             for (CuentaBancaria cuentaElim: this.cuentas){
                 if (cuentaElim.getIBAN().equalsIgnoreCase(IBAN) && cuentaElim.getSaldo()==0){
-                    this.cuentas.remove(cuenta);
+                    this.cuentas.remove(cuentaElim);
                     return true;
                 }
                 

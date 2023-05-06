@@ -56,17 +56,20 @@ public class Principal {
                         nombreTitular = sc.next();
                         System.out.println("Apellidos: ");
                         apellidosTitular= sc.next();
+                                
                         System.out.println("DNI: ");
                         DNITitular= sc.next();
                         if (!DNITitular.matches("^[0-9]{8}[A-Z]$")){
                         throw new Exception(" DNI incorrecto");
                     }
                          titular = new Persona(nombreTitular,apellidosTitular,DNITitular);
+                         
                         System.out.println("IBAN: ");
                         IBAN= sc.next();
                         if (!IBAN.matches("^ES[0-9]{20}$")) {
                         throw new Exception(" IBAN incorrecto");
                         } 
+                        
                         System.out.println("Saldo inicial: ");  
                         saldo= sc.nextDouble();
                         System.out.println("Tipo de cuenta: ");
@@ -115,8 +118,14 @@ public class Principal {
 
                         break;
                     case 2:
-//                        
+                         listaCuentas = banco.listadoCuentas();
+                        for (int i = 0; i < listaCuentas.length; i++) {
+                            System.out.println(listaCuentas[i]);
+                        }
                         break;
+                        
+                        
+                        
                     case 3:
                         System.out.println("Introduce el IBAN");
                         IBAN = sc.next();
@@ -171,9 +180,9 @@ public class Principal {
                         IBAN = sc.next();
 
                         if (banco.eliminarCuenta(IBAN)){
-                            System.out.println("Se elimino");
+                            System.out.println("Se eliminó");
                         }else{
-                            System.out.println("No se elimino");
+                            System.out.println("No se eliminó");
                         }
                         
                         
